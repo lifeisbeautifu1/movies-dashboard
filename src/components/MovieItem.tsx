@@ -1,4 +1,4 @@
-interface MovieItemProps {
+interface Props {
   id: string | number;
   active?: boolean;
   title: string;
@@ -7,7 +7,7 @@ interface MovieItemProps {
   onClick: () => void;
 }
 
-const MovieItem: React.FC<MovieItemProps> = ({
+const MovieItem: React.FC<Props> = ({
   active = false,
   title,
   genres,

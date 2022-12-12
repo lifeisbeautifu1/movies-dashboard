@@ -2173,6 +2173,22 @@
       "plot": "Four denizens in the world of high-finance predict the credit and housing bubble collapse of the mid-2000s, and decide to take on the big banks for their greed and lack of foresight.",
       "posterUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg",
       "rate": "10"
+    },
+    {
+      "title": "The Pale Blue Eye",
+      "year": 2022,
+      "plot": "The Pale Blue Eye is an upcoming American thriller film starring Christian Bale as a detective in 1830 in West Point, New York who investigates a series of murders with the assistance of a young Edgar Allan Poe.",
+      "posterUrl": "https://i0.wp.com/bloody-disgusting.com/wp-content/uploads/2022/11/pale-blue-2.png?ssl=1",
+      "rate": 10,
+      "actors": "Christian Bale, Harry Melling, Gillian Anderson",
+      "genres": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "runtime": 130,
+      "director": "Scott Cooper",
+      "id": "94a77e3c-a7fd-4898-ae2b-ddffcebc309e"
     }
   ]
 }

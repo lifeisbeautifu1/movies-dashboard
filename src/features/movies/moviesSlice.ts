@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IMovie } from '../../types/movie';
 import moviesService from './moviesService';
 
 export interface MoviesState {

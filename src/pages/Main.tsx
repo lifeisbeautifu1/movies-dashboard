@@ -1,8 +1,18 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Navbar, Sidebar } from '../components';
+import { useAppDispatch } from '../app/hooks';
+import { getMovies, getGenres } from '../features/movies/moviesSlice';
 
 const Main = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getMovies());
+    dispatch(getGenres());
+  }, [dispatch]);
+
   return (
     <>
       <Navbar />

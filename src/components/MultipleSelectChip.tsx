@@ -31,7 +31,7 @@ function getStyles(name: string, genres: readonly string[], theme: Theme) {
   };
 }
 
-interface MultipleSelectChipProps {
+interface Props {
   genres: string[];
   name?: string;
   error: boolean;
@@ -51,7 +51,7 @@ interface MultipleSelectChipProps {
   >;
 }
 
-export const MultipleSelectChip: React.FC<MultipleSelectChipProps> = ({
+export const MultipleSelectChip: React.FC<Props> = ({
   genres,
   name,
   error,

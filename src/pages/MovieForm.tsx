@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { MuiChipsInput } from 'mui-chips-input';
 import { v4 as uuid } from 'uuid';
 
-import { IMovieData } from '../types/movie';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { addMovie, editMovie } from '../features/movies/moviesSlice';
 import { MultipleSelectChip } from '../components';
@@ -23,7 +22,7 @@ const emptyMovieData = {
 const MovieForm = () => {
   const [chips, setChips] = useState<string[]>([]);
 
-  const [movieData, setMovieData] = useState<IMovieData>(emptyMovieData);
+  const [movieData, setMovieData] = useState<IMovieForm>(emptyMovieData);
 
   const [errors, setErrors] = useState({
     title: false,
