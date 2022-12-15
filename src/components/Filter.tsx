@@ -30,7 +30,7 @@ const Filter = () => {
             onChange={(e) => dispatch(setFilterStartYear(+e.target.value))}
             className='block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500'
           >
-            {[...Array(new Date().getFullYear() - 2000 + 101).keys()]
+            {Array.from(Array(new Date().getFullYear() - 2000 + 101).keys())
               .map((num) => num + 1900)
               .sort((a, b) => b - a)
               .map((year) => (
@@ -45,7 +45,7 @@ const Filter = () => {
             onChange={(e) => dispatch(setFilterEndYear(+e.target.value))}
             className='block w-full p-2  text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 '
           >
-            {[...Array(new Date().getFullYear() - 2000 + 101).keys()]
+            {Array.from(Array(new Date().getFullYear() - 2000 + 101).keys())
               .map((num) => num + 1900)
               .sort((a, b) => b - a)
               .map((year) => (

@@ -77,9 +77,7 @@ const MovieForm = () => {
       [e.target.name]: false,
     });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let isError = false;
+  const validateForm = () => {
     let tempErrors = {};
     Object.keys(movieData).forEach((key) => {
       if (
@@ -93,15 +91,20 @@ const MovieForm = () => {
           ...tempErrors,
           [key]: true,
         };
-
-        isError = true;
       }
     });
     setErrors({
       ...errors,
       ...tempErrors,
     });
-    if (isError) return;
+    return !Object.keys(tempErrors).length;
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
     if (isEdit) {
       dispatch(
         editMovie({
