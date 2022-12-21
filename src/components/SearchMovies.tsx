@@ -4,14 +4,15 @@ import { FunnelIcon } from '@heroicons/react/24/outline';
 import { Filter } from './index';
 import { useDebounce } from '../hooks/useDebounce';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { searchMovies, setIsFilterOpen } from '../features/movies/moviesSlice';
+import { searchMovies } from '../features/movies/moviesSlice';
+import { setIsFilterOpen } from '../features/filter/filterSlice';
 
 const SearchMovies = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { debounceValue } = useDebounce(searchTerm, 500);
 
-  const { isFilterOpen } = useAppSelector((state) => state.movies);
+  const { isFilterOpen } = useAppSelector((state) => state.filter);
 
   const dispatch = useAppDispatch();
 
@@ -23,6 +24,11 @@ const SearchMovies = () => {
     e.preventDefault();
     dispatch(setIsFilterOpen(false));
     dispatch(searchMovies(searchTerm));
+  };
+
+  const onFilterClick = () => {
+    if (isFilterOpen) dispatch(searchMovies(searchTerm));
+    dispatch(setIsFilterOpen(!isFilterOpen));
   };
 
   return (
@@ -47,10 +53,7 @@ const SearchMovies = () => {
       </div>
 
       <button
-        onClick={() => {
-          if (isFilterOpen) dispatch(searchMovies(searchTerm));
-          dispatch(setIsFilterOpen(!isFilterOpen));
-        }}
+        onClick={onFilterClick}
         type='button'
         className='w-full h-8 px-3 flex items-center gap-2 text-xs bg-primary transition duration-300 hover:bg-secondary btn-drop-shadow rounded-lg text-center justify-center'
       >

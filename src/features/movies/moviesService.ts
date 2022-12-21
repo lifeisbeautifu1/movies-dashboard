@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { IMovie } from '../../types';
+
 const API = axios.create({
   baseURL: 'http://localhost:3001/movies',
 });

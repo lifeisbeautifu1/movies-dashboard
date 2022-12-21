@@ -4,19 +4,21 @@ import {
   setFilterEndYear,
   setFilterStartRuntime,
   setFilterEndRuntime,
+} from '../features/filter/filterSlice';
+import {
   addToIncludedGenres,
   removeFromIncludedGenres,
 } from '../features/movies/moviesSlice';
 
 const Filter = () => {
+  const { genres, includedGenres } = useAppSelector((state) => state.movies);
+
   const {
-    genres,
     filterStartYear,
     filterEndYear,
     filterStartRuntime,
     filterEndRuntime,
-    includedGenres,
-  } = useAppSelector((state) => state.movies);
+  } = useAppSelector((state) => state.filter);
 
   const dispatch = useAppDispatch();
 

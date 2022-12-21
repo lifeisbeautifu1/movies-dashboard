@@ -6,12 +6,20 @@ import { setIsEdit } from '../features/movies/moviesSlice';
 import { Loader, MovieItem } from './index';
 
 const MovieList = () => {
-  const { movies, selectedMovie, isMoviesLoading, isFilterOpen } =
-    useAppSelector((state) => state.movies);
+  const { movies, selectedMovie, isMoviesLoading } = useAppSelector(
+    (state) => state.movies
+  );
+
+  const { isFilterOpen } = useAppSelector((state) => state.filter);
 
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const onEdit = () => {
+    dispatch(setIsEdit(false));
+    navigate('/movie/form');
+  };
 
   return (
     <>
@@ -53,10 +61,7 @@ const MovieList = () => {
             : 'элементов'}
         </p>
         <button
-          onClick={() => {
-            dispatch(setIsEdit(false));
-            navigate('/movie/form');
-          }}
+          onClick={onEdit}
           className='w-full md:w-auto h-8 px-3 flex items-center gap-2 text-xs bg-primary transition duration-300 hover:bg-secondary btn-drop-shadow rounded-lg text-center'
         >
           <PlusIcon className='h-5 w-5' />

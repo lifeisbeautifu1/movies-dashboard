@@ -1,34 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import moviesService from './moviesService';
 
-export interface MoviesState {
-  isLoading: boolean;
-  isMoviesLoading: boolean;
-  isEdit: boolean;
-  movies: IMovie[];
-  genres: string[];
-  selectedMovie: IMovie | null;
-  isFilterOpen: boolean;
-  filterStartYear: number;
-  filterEndYear: number;
-  filterStartRuntime: number;
-  filterEndRuntime: number;
-  includedGenres: string[];
-}
+import moviesService from './moviesService';
+import { IMovie, MoviesState } from '../../types';
 
 const initialState: MoviesState = {
   isLoading: false,
   isMoviesLoading: false,
   isEdit: false,
-  movies: [],
   genres: [],
-  selectedMovie: null,
-  isFilterOpen: false,
-  filterStartYear: 1900,
-  filterEndYear: new Date().getFullYear(),
-  filterStartRuntime: 30,
-  filterEndRuntime: 999,
   includedGenres: [],
+  movies: [],
+  selectedMovie: null,
 };
 
 export const getMovies = createAsyncThunk(
@@ -100,10 +82,10 @@ export const searchMovies = createAsyncThunk(
   'movies/searchMovies',
   async (searchTerm: string, thunkAPI: any) => {
     try {
-      const startYear = thunkAPI.getState().movies.filterStartYear;
-      const endYear = thunkAPI.getState().movies.filterEndYear;
-      const startRuntime = thunkAPI.getState().movies.filterStartRuntime;
-      const endRuntime = thunkAPI.getState().movies.filterEndRuntime;
+      const startYear = thunkAPI.getState().filter.filterStartYear;
+      const endYear = thunkAPI.getState().filter.filterEndYear;
+      const startRuntime = thunkAPI.getState().filter.filterStartRuntime;
+      const endRuntime = thunkAPI.getState().filter.filterEndRuntime;
       const queryString = `?title_like=${searchTerm}&year_gte=${startYear}&year_lte=${endYear}&runtime_gte=${startRuntime}&runtime_lte=${endRuntime}`;
       const { data } = await moviesService.searchMovies(queryString);
       return data;
@@ -123,21 +105,6 @@ export const moviesSlice = createSlice({
     },
     setIsEdit: (state, action: PayloadAction<boolean>) => {
       state.isEdit = action.payload;
-    },
-    setIsFilterOpen: (state, action: PayloadAction<boolean>) => {
-      state.isFilterOpen = action.payload;
-    },
-    setFilterStartYear: (state, action: PayloadAction<number>) => {
-      state.filterStartYear = action.payload;
-    },
-    setFilterEndYear: (state, action: PayloadAction<number>) => {
-      state.filterEndYear = action.payload;
-    },
-    setFilterStartRuntime: (state, action: PayloadAction<number>) => {
-      state.filterStartRuntime = action.payload;
-    },
-    setFilterEndRuntime: (state, action: PayloadAction<number>) => {
-      state.filterEndRuntime = action.payload;
     },
     addToIncludedGenres: (state, action: PayloadAction<string>) => {
       state.includedGenres.push(action.payload);
@@ -233,11 +200,6 @@ export const moviesSlice = createSlice({
 export const {
   setSelectedMovie,
   setIsEdit,
-  setIsFilterOpen,
-  setFilterStartYear,
-  setFilterEndYear,
-  setFilterStartRuntime,
-  setFilterEndRuntime,
   addToIncludedGenres,
   removeFromIncludedGenres,
 } = moviesSlice.actions;

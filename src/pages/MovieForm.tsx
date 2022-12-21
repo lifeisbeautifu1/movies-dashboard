@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { MuiChipsInput } from 'mui-chips-input';
 import { v4 as uuid } from 'uuid';
 
+import { IMovieForm } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { addMovie, editMovie } from '../features/movies/moviesSlice';
-import { MultipleSelectChip } from '../components';
+import { MultipleSelectChip, FormControl } from '../components';
 
 const emptyMovieData = {
   title: '',
@@ -153,6 +154,11 @@ const MovieForm = () => {
     });
   };
 
+  const onGoBack = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    navigate(-1);
+  };
+
   return (
     <>
       <form
@@ -163,42 +169,26 @@ const MovieForm = () => {
           {isEdit ? 'Редактирование' : 'Создание'}
         </h2>
         <div className='h-[0] pl-2 flex-grow overflow-y-scroll'>
-          <div className='mt-4 flex flex-col gap-1 items-start'>
-            <label htmlFor='title'>Название фильма</label>
-            <input
-              type='text'
-              placeholder='Введите название фильма'
-              id='title'
-              name='title'
-              value={movieData.title}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px] ${
-                errors.title && 'bg-red-200 border border-red-300'
-              }`}
-            />
-            {errors.title && (
-              <p className='text-red-400 text-xs'>Обязательное поле</p>
-            )}
-          </div>
-          <div className='mt-4 flex flex-col gap-1 items-start'>
-            <label htmlFor='year'>Год выпуска</label>
-            <input
-              type='number'
-              placeholder='Введите год выпуска'
-              id='year'
-              name='year'
-              value={movieData.year}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px] ${
-                errors.year && 'bg-red-200 border border-red-300'
-              }`}
-            />
-            {errors.year && (
-              <p className='text-red-400 text-xs'>Обязательное поле</p>
-            )}
-          </div>
+          <FormControl
+            type='text'
+            placeholder='Введите название фильма'
+            name='title'
+            label='Название фильма'
+            value={movieData.title}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.title}
+          />
+          <FormControl
+            type='number'
+            placeholder='Введите год выпуска'
+            name='year'
+            label='Год выпуска'
+            value={movieData.year}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.year}
+          />
           <div className='mt-4 flex flex-col gap-1'>
             <label htmlFor='plot'>Описание</label>
             <textarea
@@ -248,90 +238,55 @@ const MovieForm = () => {
               <p className='text-red-400 text-xs'>Обязательное поле</p>
             )}
           </div>
-          <div className='mt-4 flex flex-col gap-1 items-start'>
-            <label htmlFor='posterUrl'>Укажите ссылку на обложку</label>
-            <input
-              type='text'
-              placeholder='Введите ссылку ...'
-              id='posterUrl'
-              name='posterUrl'
-              value={movieData.posterUrl}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px] ${
-                errors.posterUrl && 'bg-red-200 border border-red-300'
-              }`}
-            />
-            {errors.posterUrl && (
-              <p className='text-red-400 text-xs'>Обязательное поле</p>
-            )}
-          </div>
-          <div className='mt-4 flex flex-col gap-1 items-start'>
-            <label htmlFor='rate'>Рейтинг</label>
-            <input
-              type='number'
-              min='0'
-              max='10'
-              step='any'
-              placeholder='Задайте рейтинг'
-              id='rate'
-              name='rate'
-              value={movieData.rate}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px] ${
-                errors.rate && 'bg-red-200 border border-red-300'
-              }`}
-            />
-            {errors.rate && (
-              <p className='text-red-400 text-xs'>Обязательное поле</p>
-            )}
-          </div>
-          <div className='mt-4 flex flex-col gap-1 items-start'>
-            <label htmlFor='runtime'>Длительность</label>
-            <input
-              type='number'
-              min='0'
-              step='any'
-              placeholder='Задайте длительность фильма'
-              id='runtime'
-              name='runtime'
-              value={movieData.runtime}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px] ${
-                errors.runtime && 'bg-red-200 border border-red-300'
-              }`}
-            />
-            {errors.runtime && (
-              <p className='text-red-400 text-xs'>Обязательное поле</p>
-            )}
-          </div>
-          <div className='mt-4 mb-2 flex flex-col gap-1 items-start'>
-            <label htmlFor='director'>Укажите режисера</label>
-            <input
-              type='text'
-              placeholder='Введите ...'
-              id='director'
-              name='director'
-              value={movieData?.director}
-              onChange={handleChange}
-              onFocus={handleErrorReset}
-              className={`bg-[#ECF1F7] py-3 px-2 rounded-lg text-xs text-black/50 min-w-[325px]  ${
-                errors.director && 'bg-red-200 border border-red-300'
-              }`}
-            />
-          </div>
-          {errors.director && (
-            <p className='text-red-400 text-xs'>Обязательное поле</p>
-          )}
+          <FormControl
+            type='text'
+            placeholder='Введите ссылку ...'
+            name='posterUrl'
+            label='Укажите ссылку на обложку'
+            value={movieData.posterUrl}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.posterUrl}
+          />
+          <FormControl
+            type='number'
+            min='0'
+            max='10'
+            step='any'
+            placeholder='Задайте рейтинг'
+            name='rate'
+            label='Рейтинг'
+            value={movieData.rate}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.rate}
+          />
+          <FormControl
+            type='number'
+            min='0'
+            step='any'
+            placeholder='Задайте длительность фильма'
+            name='runtime'
+            label='Длительность'
+            value={movieData.runtime}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.runtime}
+          />
+          <FormControl
+            type='text'
+            placeholder='Введите ...'
+            name='director'
+            label='Укажите режисера'
+            value={movieData.director}
+            onChange={handleChange}
+            onFocus={handleErrorReset}
+            isError={errors.director}
+          />
         </div>
         <div className='flex items-center justify-end py-4 gap-5 border-t border-t-[#d9d9d9]'>
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
+            onClick={onGoBack}
             className='h-8 py-2 px-3 btn-drop-shadow bg-[#ECF1F7] transition duration-300 active:scale-[0.95] hover:opacity-90 rounded-lg text-xs text-[#336FEE]'
           >
             Отменить

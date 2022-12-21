@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import moviesReducer from '../features/movies/moviesSlice';
+import filterReducer from '../features/filter/filterSlice';
 
 export const store = configureStore({
   reducer: {
     movies: moviesReducer,
+    filter: filterReducer,
   },
 });
 

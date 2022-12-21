@@ -72,7 +72,7 @@
     {
       "id": 4,
       "title": "Crocodile Dundee",
-      "year": 1986,
+      "year": 1987,
       "runtime": 97,
       "genres": [
         "Adventure",
@@ -82,7 +82,7 @@
       "actors": "Paul Hogan, Linda Kozlowski, John Meillon, David Gulpilil",
       "plot": "An American reporter goes to the Australian outback to meet an eccentric crocodile poacher and invites him to New York City.",
       "posterUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTg0MTU1MTg4NF5BMl5BanBnXkFtZTgwMDgzNzYxMTE@._V1_SX300.jpg",
-      "rate": "5"
+      "rate": 5
     },
     {
       "id": 5,
@@ -2190,6 +2190,22 @@
       "runtime": 130,
       "director": "Scott Cooper",
       "id": "94a77e3c-a7fd-4898-ae2b-ddffcebc309e"
+    },
+    {
+      "title": "Oppenheimer",
+      "year": 2023,
+      "plot": "Oppenheimer is an upcoming biographical film written and directed by Christopher Nolan and starring Cillian Murphy as J. Robert Oppenheimer, the American theoretical physicist credited with being the \"father of the atomic bomb\" for his role in the Manhattan Project—the World War II undertaking that developed the first nuclear weapons. The film is based on American Prometheus, a biography written by Kai Bird and Martin J. Sherwin. Emily Blunt, Robert Downey Jr., Matt Damon, Rami Malek, Florence Pugh, Benny Safdie, Michael Angarano, Josh Hartnett, and Kenneth Branagh also star. It is a co-production between Universal Pictures, Syncopy Inc. and Atlas Entertainment, with Nolan producing the film alongside Emma Thomas and Charles Roven.",
+      "posterUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg",
+      "rate": 10,
+      "actors": "Cillian Murphy, Emily Blunt, Robert Downey Jr.",
+      "genres": [
+        "History",
+        "Thriller",
+        "Biography"
+      ],
+      "runtime": 90,
+      "director": "Christopher Nolan",
+      "id": "f4745706-0452-4f76-8a3d-cca188d1da79"
     }
   ]
 }
