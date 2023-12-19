@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import moviesService from './moviesService';
-import { IMovie, MoviesState } from '../../types';
+import moviesService from "./moviesService";
+import { IMovie, MoviesState } from "../../types";
 
 const initialState: MoviesState = {
   isLoading: false,
@@ -11,10 +11,11 @@ const initialState: MoviesState = {
   includedGenres: [],
   movies: [],
   selectedMovie: null,
+  favourites: [],
 };
 
 export const getMovies = createAsyncThunk(
-  'movies/getMovies',
+  "movies/getMovies",
   async (_, thunkAPI) => {
     try {
       const { data } = await moviesService.getAllMovies();
@@ -27,7 +28,7 @@ export const getMovies = createAsyncThunk(
 );
 
 export const getGenres = createAsyncThunk(
-  'movies/getGenres',
+  "movies/getGenres",
   async (_, thunkAPI) => {
     try {
       const { data } = await moviesService.getGenres();
@@ -39,8 +40,21 @@ export const getGenres = createAsyncThunk(
   }
 );
 
+export const getFavourites = createAsyncThunk(
+  "movies/getAllFavourites",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await moviesService.getFavourites();
+      return data;
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getMovie = createAsyncThunk(
-  'movies/getMovie',
+  "movies/getMovie",
   async (id: string, thunkAPI) => {
     try {
       const { data } = await moviesService.getMovie(id);
@@ -53,7 +67,7 @@ export const getMovie = createAsyncThunk(
 );
 
 export const addMovie = createAsyncThunk(
-  'movies/addMovie',
+  "movies/addMovie",
   async (movieData: IMovie, thunkAPI) => {
     try {
       const { data } = await moviesService.addMovie(movieData);
@@ -65,8 +79,21 @@ export const addMovie = createAsyncThunk(
   }
 );
 
+export const addToFavourite = createAsyncThunk(
+  "movies/addToFavourite",
+  async (movieData: IMovie, thunkAPI) => {
+    try {
+      const { data } = await moviesService.addToFavourite(movieData);
+      return data;
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const editMovie = createAsyncThunk(
-  'movies/editMovie',
+  "movies/editMovie",
   async (movieData: IMovie, thunkAPI) => {
     try {
       const { data } = await moviesService.editMovie(movieData?.id, movieData);
@@ -78,8 +105,21 @@ export const editMovie = createAsyncThunk(
   }
 );
 
+export const removeFromFavourites = createAsyncThunk(
+  "movies/removeFromFavourites",
+  async (movieData: IMovie, thunkAPI) => {
+    try {
+      const { data } = await moviesService.removeFromFavourites(movieData?.id);
+      return data;
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const searchMovies = createAsyncThunk(
-  'movies/searchMovies',
+  "movies/searchMovies",
   async (searchTerm: string, thunkAPI: any) => {
     try {
       const startYear = thunkAPI.getState().filter.filterStartYear;
@@ -97,7 +137,7 @@ export const searchMovies = createAsyncThunk(
 );
 
 export const moviesSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     setSelectedMovie: (state, action: PayloadAction<IMovie>) => {
@@ -125,6 +165,19 @@ export const moviesSlice = createSlice({
         (state, action: PayloadAction<IMovie[]>) => {
           state.isMoviesLoading = false;
           state.movies = action.payload;
+        }
+      )
+      .addCase(getFavourites.rejected, (state) => {
+        state.isMoviesLoading = false;
+      })
+      .addCase(getFavourites.pending, (state) => {
+        state.isMoviesLoading = true;
+      })
+      .addCase(
+        getFavourites.fulfilled,
+        (state, action: PayloadAction<IMovie[]>) => {
+          state.isMoviesLoading = false;
+          state.favourites = action.payload;
         }
       )
       .addCase(getMovies.rejected, (state) => {
@@ -178,6 +231,21 @@ export const moviesSlice = createSlice({
         state.selectedMovie = action.payload;
         state.movies.push(action.payload);
       })
+      .addCase(addToFavourite.rejected, (state) => {
+        // state.isLoading = false;
+      })
+      .addCase(addToFavourite.pending, (state) => {
+        // state.isLoading = true;
+      })
+      .addCase(
+        addToFavourite.fulfilled,
+        (state, action: PayloadAction<IMovie>) => {
+          // state.isLoading = false;
+          // state.selectedMovie = action.payload;
+          state.favourites.push(action.payload);
+          // state.movies.push(action.payload);
+        }
+      )
       .addCase(addMovie.rejected, (state) => {
         state.isLoading = false;
       })
@@ -193,6 +261,22 @@ export const moviesSlice = createSlice({
       })
       .addCase(editMovie.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(removeFromFavourites.pending, (state) => {
+        // state.isLoading = true;
+      })
+      .addCase(
+        removeFromFavourites.fulfilled,
+        (state, action: PayloadAction<IMovie>) => {
+          // state.isLoading = false;
+          // state.selectedMovie = action.payload;
+          state.favourites = state.favourites.filter(
+            (movie) => movie.id !== state.selectedMovie?.id
+          );
+        }
+      )
+      .addCase(removeFromFavourites.rejected, (state) => {
+        // state.isLoading = false;
       });
   },
 });

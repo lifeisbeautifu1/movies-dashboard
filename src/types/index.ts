@@ -31,6 +31,7 @@ export interface MoviesState {
   selectedMovie: IMovie | null;
   genres: string[];
   includedGenres: string[];
+  favourites: IMovie[];
 }
 
 export interface FilterState {
